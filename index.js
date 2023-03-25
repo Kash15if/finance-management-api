@@ -8,16 +8,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-//importing db-connection query
-const pool = require("./models/dbCon");
-pool
-  .connect()
-  .then((row) => {
-    console.log("db is connected :", row._connected);
-  })
-  .catch((err) => {
-    throw err;
-  });
 
 //for cors error
 const cors = require("cors");
@@ -33,9 +23,16 @@ const corsOptions = {
 
 app.use(cors({ origin: "*" }));
 
-const adminRoutes = require("./routes/admin");
-const clientRoutes = require("./routes/client");
-app.use("/admin", adminRoutes);
-app.use("/client", clientRoutes);
 
-app.listen(5000);
+
+const crudRoutes = require("./routes/crud");
+app.use("/crud", crudRoutes);
+
+app.get("/", (req, res) => {
+
+  console.log("ddvdvd");
+  res.send([{ x: 1 }, { x: 3 }])
+
+})
+
+app.listen(3000);

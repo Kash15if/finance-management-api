@@ -1,9 +1,11 @@
-const sql = require("mssql");
+const mongoose = require('mongoose');
 
-const dbConfig = require("../config/dbConfig");
+mongoose.connect(process.env.MONGO_KEY, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.log(err));
 
-// new pool creation using environment variable
 
-const pool = new sql.ConnectionPool(dbConfig);
-
-module.exports = pool;
+module.exports = mongoose;
